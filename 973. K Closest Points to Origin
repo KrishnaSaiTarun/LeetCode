@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int K) {
+        priority_queue< tuple<float, int, int>, vector<tuple<float, int, int>>, greater<tuple<float, int, int>> > pq;
+        vector<vector<int>> ret;
+        
+        for(int i = 0; i<points.size();i++){
+            
+            float dist = sqrt((points[i][0] * points[i][0]) + (points[i][1] *points[i][1]));
+            pq.push({dist, points[i][0], points[i][1]});
+        }
+        
+       for(int i=0;i<K ; i++){
+           vector<int> in;
+           in.push_back(get<1>(pq.top()));
+           in.push_back(get<2>(pq.top()));
+           ret.push_back(in);
+           pq.pop();
+            
+        }
+            return ret;
+    }
+};
