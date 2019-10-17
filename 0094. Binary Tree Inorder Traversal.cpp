@@ -13,24 +13,23 @@ public:
         
         vector<int> ret;
         
-        if(root==NULL) return ret;
-        
         stack<TreeNode*> s;
         
         
-        while(1){
+        while(root || (!s.empty())){
             
             while(root){
                 s.push(root);
                 root = root->left;
             }
-            if(s.empty()) break;
+            
             
             root = s.top();
             s.pop();
             ret.push_back(root->val);
-            root = root->right;
             
+            
+            root = root->right;
 
         }
         
