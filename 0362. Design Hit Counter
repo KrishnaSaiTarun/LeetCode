@@ -1,0 +1,33 @@
+from collections import deque, defaultdict
+
+class HitCounter:
+
+    def __init__(self):
+        self.queue = deque([])
+        self.total = 0
+        
+    def _update_queue(self, timestamp) -> None:
+        while self.queue and self.queue[0][0] <= timestamp - 300:
+            time, count = self.queue.popleft()
+            self.total -= count
+
+    def hit(self, timestamp: int) -> None:
+        self._update_queue(timestamp)
+        if self.queue and self.queue[-1][0] == timestamp:
+            time, count = self.queue.pop()
+            self.queue.append((time, count+1))
+        else:
+            self.queue.append((timestamp, 1))
+        self.total+=1 
+        
+    def getHits(self, timestamp: int) -> int:
+        self._update_queue(timestamp)
+        return self.total
+        
+        
+
+
+# Your HitCounter object will be instantiated and called as such:
+# obj = HitCounter()
+# obj.hit(timestamp)
+# param_2 = obj.getHits(timestamp)
